@@ -5,6 +5,7 @@ namespace Modules\Team\Entities;
 use App\User;
 use App\Scopes\CompanyScope;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Group extends Model
@@ -13,7 +14,7 @@ class Group extends Model
         'name',
         'description',
         'status',
-        // 'fa_icon'
+        'team_leader'
     ];
 
     public $dates = [
@@ -42,5 +43,15 @@ class Group extends Model
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'group_users', 'group_id', 'user_id');
+    }
+
+    /**
+     * Get the leader that owns the Group
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function leader(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'team_leader', 'id');
     }
 }

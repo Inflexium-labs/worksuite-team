@@ -41,14 +41,12 @@ class TeamController extends AdminBaseController
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            // 'fa_icon' => 'required|string|max:20',
             'description' => 'nullable|string',
             'status' => 'sometimes|boolean',
         ]);
 
         $team = Group::create([
             'name' => $request->name,
-            // 'fa_icon' => $request->fa_icon,
             'description' => $request->description,
             'status' => $request->status ?? false
         ]);
@@ -134,5 +132,11 @@ class TeamController extends AdminBaseController
     {
         $team->members()->detach(request()->member);
         return Reply::success('Member removed successfully');
+    }
+
+    public function updateLeader(Group $team)
+    {
+        $team->update(['team_leader' => request()->leader]);
+        return Reply::success('Updated successfully');
     }
 }

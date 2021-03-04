@@ -79,9 +79,31 @@
                                                     Members:
                                                 </div>
                                                 <div class="col-sm-7 text-right">
-                                                    <span
-                                                        class="label label-success">{{ $team->members->count() }}</span>
+                                                    <span class="badge badge-success">{{ $team->members->count() }}</span>
                                                 </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row" id="previewLeader">
+                                                <div class="col-sm-5">
+                                                    Team Leader:
+                                                </div>
+                                                <div class="col-sm-7 text-right">
+                                                    <a href="javascript:;" style="color: #03a9f3;">{{ $team->leader->name ?? 'Add' }}</a>
+                                                    {{-- <a class="label label-info"><i class="fa fa-pencil"></i></a> --}}
+                                                </div>
+                                            </div>
+                                            <div class="row" id="editLeader" style="display: none;">
+                                                <select class="form-control select2 m-b-10" data-placeholder="@lang('modules.messages.chooseMember')" name="team_leader">
+                                                    @foreach ($employees as $emp)
+                                                        <option value="{{ $emp->id }}" {{ $emp->id == $team->team_leader ? 'selected' : '' }}>{{ ucwords($emp->name) }}
+                                                            @if ($emp->id == $user->id)
+                                                                (YOU) @endif
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <button class="btn btn-sm btn-success" id="update">Update</button>
+                                                <button class="btn btn-sm btn-inverse" id="cancel">Cancel</button>
                                             </div>
                                         </li>
                                         <li>
@@ -154,12 +176,16 @@
                                             </thead>
                                             <tbody id="employeeDocsList">
                                                 @foreach ($team->members as $member)
-                                                <tr>
-                                                    <td>{{ $member->id }}</td>
-                                                    <td>{{ $member->name }}</td>
-                                                    <td>{{ $member->employeeDetail->department->team_name ?? '--' }}</td>
-                                                    <td><a class="btn btn-danger btn-xs unlinkMember" data-id="{{ $member->id }}" href="{{ route('admin.team.remove-member', $team->id) }}"><i class="fa fa-unlink"></i></a></td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>{{ $member->id }}</td>
+                                                        <td>{{ $member->name }}</td>
+                                                        <td>{{ $member->employeeDetail->department->team_name ?? '--' }}
+                                                        </td>
+                                                        <td><a class="btn btn-danger btn-xs unlinkMember"
+                                                                data-id="{{ $member->id }}"
+                                                                href="{{ route('admin.team.remove-member', $team->id) }}"><i
+                                                                    class="fa fa-unlink"></i></a></td>
+                                                    </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -275,30 +301,62 @@
             })
         });
 
-        $('#deleteTeam').click(function(){
-        swal({
-            title: "Delete Team",
-            text: "Are you sure want to delete?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            closeOnConfirm: true,
-            closeOnCancel: true
-        }, function(isConfirm){
-            console.log(isConfirm);
-            if (isConfirm) {
-                $.easyAjax({
-                    type: 'DELETE',
-                    url: '{{ route('admin.team.destroy', $team) }}',
-                    data: {'_token': '{{ csrf_token() }}'},
-                    success: function (response) {
-                        if (response.status == "success") {
-                            $.unblockUI();
+        $('#deleteTeam').click(function() {
+            swal({
+                title: "Delete Team",
+                text: "Are you sure want to delete?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            }, function(isConfirm) {
+                console.log(isConfirm);
+                if (isConfirm) {
+                    $.easyAjax({
+                        type: 'DELETE',
+                        url: '{{ route('admin.team.destroy', $team) }}',
+                        data: {
+                            '_token': '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            if (response.status == "success") {
+                                $.unblockUI();
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
+            });
         });
-    });
+
+        $('#previewLeader a').click(function(){
+            toggleLeaderTab()
+        })
+
+        $('#editLeader #cancel').click(function(){
+            toggleLeaderTab()
+        })
+
+        function toggleLeaderTab() {
+            let preview = $('#previewLeader');
+            let edit = $('#editLeader');
+            
+            preview.toggle('show');
+            edit.toggle('show');
+        }
+
+        $('#editLeader #update').click(function(){
+            $.easyAjax({
+                url: "{{ route('admin.team.update-leader', $team) }}",
+                type: "POST",
+                data: { 'leader': $(this).prev().val(), '_token': '{{ csrf_token() }}' },
+                success: function(res) {
+                    if (res.status == 'success') {
+                        location.reload(true);
+                    }
+                }
+            })
+        })
+
     </script>
 @endpush

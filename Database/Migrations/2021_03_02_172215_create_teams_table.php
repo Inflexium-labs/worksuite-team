@@ -20,9 +20,11 @@ class CreateTeamsTable extends Migration
             // $table->string('fa_icon');
             $table->text('description')->nullable();
             $table->boolean('status')->default(false);
+            $table->unsignedInteger('team_leader')->nullable();
             $table->timestamps();
             
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('team_leader')->references('id')->on('users')->onDelete('SET NULL');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 
