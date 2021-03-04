@@ -19,27 +19,6 @@
                     <textarea class="form-control" name="description" placeholder="Description" rows="5"></textarea>
                 </div>
 
-                {{-- <div class="form-group">
-                    <label class="required">
-                        Icon Name
-                        <a class="mytooltip font-12" href="javascript:void(0)">
-                            <i class="fa fa-info-circle"></i>
-                            <span class="tooltip-content5">
-                                <span class="tooltip-text3">
-                                    <span class="tooltip-inner2">
-                                        Fontawesome.com icon name, for example instead of "fa-user", use only "user" as the icon name
-                                    </span>
-                                </span>
-                            </span>
-                        </a>
-                    </label>
-                    <a target="_blank" class="m-l-5" href="https://fontawesome.com">
-                        Check <i class="fa fa-external-link" title="fontawesome.com"></i>
-                    </a>
-
-                    <input type="text" class="form-control" name="fa_icon" placeholder="Fontawesome icon name"/>
-                </div> --}}
-
                 <div class="form-group">
                     <label style="display: block;">Status</label>
                     <div class="switchery-demo">

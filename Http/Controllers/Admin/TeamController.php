@@ -2,11 +2,12 @@
 
 namespace Modules\Team\Http\Controllers\Admin;
 
+use App\User;
 use App\Helper\Reply;
 use Illuminate\Http\Request;
+use Modules\Team\Entities\Group;
 use Illuminate\Contracts\Support\Renderable;
 use App\Http\Controllers\Admin\AdminBaseController;
-use Modules\Team\Entities\Group;
 
 class TeamController extends AdminBaseController
 {
@@ -64,38 +65,74 @@ class TeamController extends AdminBaseController
     {
         $this->pageTitle = 'Team View';
         $this->team = $team;
+        $this->employees = User::allEmployees()->whereNotIn('id', $team->members->pluck('id'));
 
         return view('team::admin.team.show', $this->data);
     }
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $id
+     * @param int $team
      * @return Renderable
      */
-    public function edit($id)
+    public function edit(Group $team)
     {
-        return view('team::edit');
+        $this->team = $team;
+        return view('team::admin.team.edit', $this->data);
     }
 
     /**
      * Update the specified resource in storage.
      * @param Request $request
-     * @param int $id
+     * @param int $team
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Group $team)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:191',
+            'description' => 'nullable|string'
+        ]);
+
+        $team->update($request->only('name', 'description'));
+
+        return Reply::success('Updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
-     * @param int $id
+     * @param int $team
      * @return Renderable
      */
-    public function destroy($id)
+    public function destroy(Group $team)
     {
-        //
+        $team->delete();
+        $route = route('admin.team.index');
+
+        return Reply::redirect($route, 'Deleted successfully');
+    }
+
+    public function statusUpdate(Group $team)
+    {
+        $team->update([
+            'status' => request()->status == 'true' ? true : false
+        ]);
+
+        return Reply::success('Updated successfully');
+    }
+
+    public function addMembers(Group $team)
+    {
+        foreach (request()->members as $member) {
+            $team->members()->attach($member);
+        }
+
+        return Reply::success('Added successfully');
+    }
+
+    public function removeMember(Group $team)
+    {
+        $team->members()->detach(request()->member);
+        return Reply::success('Member removed successfully');
     }
 }
