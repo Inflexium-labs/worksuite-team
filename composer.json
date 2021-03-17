@@ -1,12 +1,10 @@
 {
     "name": "nwidart/team",
     "description": "",
-    "authors": [
-        {
-            "name": "Nicolas Widart",
-            "email": "n.widart@gmail.com"
-        }
-    ],
+    "authors": [{
+        "name": "Nicolas Widart",
+        "email": "n.widart@gmail.com"
+    }],
     "extra": {
         "laravel": {
             "providers": [],
@@ -18,6 +16,7 @@
     "autoload": {
         "psr-4": {
             "Modules\\Team\\": ""
-        }
+        },
+        "files": ["Modules/Team/Helpers/main.php"]
     }
 }

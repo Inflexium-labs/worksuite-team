@@ -5,6 +5,7 @@ namespace Modules\Team\Entities;
 use App\User;
 use App\Scopes\CompanyScope;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -33,6 +34,15 @@ class Group extends Model
                 $model->company_id = company()->id;
             }
         });
+
+        // static::addGlobalScope('active', function (Builder $builder) {
+        //     $builder->where('groups.status', 1);
+        // });
+    }
+
+    public function scopeActive(Builder $builder)
+    {
+        return $builder->where('groups.status', 1);
     }
 
     /**
