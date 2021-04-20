@@ -17,7 +17,7 @@ class TeamController extends AdminBaseController
      */
     public function index()
     {
-        $this->pageTitle = 'Team';
+        $this->pageTitle = __('team::app.team');
         $this->teams = Group::all();
 
         return view('team::admin.team.index', $this->data);
@@ -51,7 +51,7 @@ class TeamController extends AdminBaseController
             'status' => $request->status ?? false
         ]);
 
-        return Reply::success('Team created successfully');
+        return Reply::success(__('team::app.messages.createSuccess'));
     }
 
     /**
@@ -61,7 +61,7 @@ class TeamController extends AdminBaseController
      */
     public function show(Group $team)
     {
-        $this->pageTitle = 'Team View';
+        $this->pageTitle = __('team::app.teamView');
         $this->team = $team;
         $this->employees = User::allEmployees()->whereNotIn('id', $team->members->pluck('id'));
 
@@ -94,7 +94,7 @@ class TeamController extends AdminBaseController
 
         $team->update($request->only('name', 'description'));
 
-        return Reply::success('Updated successfully');
+        return Reply::success(__('team::app.messages.updateSuccess'));
     }
 
     /**
@@ -107,7 +107,7 @@ class TeamController extends AdminBaseController
         $team->delete();
         $route = route('admin.team.index');
 
-        return Reply::redirect($route, 'Deleted successfully');
+        return Reply::redirect($route, __('team::app.messages.deleteSuccess'));
     }
 
     public function statusUpdate(Group $team)
@@ -116,7 +116,7 @@ class TeamController extends AdminBaseController
             'status' => request()->status == 'true' ? true : false
         ]);
 
-        return Reply::success('Updated successfully');
+        return Reply::success(__('team::app.messages.statusUpdateSuccess'));
     }
 
     public function addMembers(Group $team)
@@ -125,18 +125,18 @@ class TeamController extends AdminBaseController
             $team->members()->attach($member);
         }
 
-        return Reply::success('Added successfully');
+        return Reply::success(__('team::app.messages.memberAddSuccess'));
     }
 
     public function removeMember(Group $team)
     {
         $team->members()->detach(request()->member);
-        return Reply::success('Member removed successfully');
+        return Reply::success(__('team::app.messages.memberRemoveSuccess'));
     }
 
     public function updateLeader(Group $team)
     {
         $team->update(['team_leader' => request()->leader]);
-        return Reply::success('Updated successfully');
+        return Reply::success(__('team::app.messages.leaderUpdateSuccess'));
     }
 }

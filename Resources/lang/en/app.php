@@ -13,4 +13,14 @@ return array(
     'teamMembers' => 'Team Members',
     'updateStatus' => 'Update Status',
     'you' => 'YOU',
+
+    'messages' => array(
+        'createSuccess' => 'Team created successfully',
+        'updateSuccess' => 'Team updated successfully',
+        'deleteSuccess' => 'Team deleted successfully',
+        'statusUpdateSuccess' => 'Team status updated successfully',
+        'memberAddSuccess' => 'Member added successfully',
+        'memberRemoveSuccess' => 'Member removed successfully',
+        'leaderUpdateSuccess' => 'Team leader updated successfully',
+    )
 );
