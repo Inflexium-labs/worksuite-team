@@ -11,10 +11,10 @@
     <div class="row bg-title">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
             <a href="{{ route('admin.team.index') }}" class="btn btn-outline btn-inverse btn-sm pull-left m-r-15">
-                <i class="fa fa-arrow-left"></i> Back
+                <i class="fa fa-arrow-left"></i> @lang('app.back')
             </a>
 
-            <h4 class="page-title "><i class="fa fa-users"></i> {{ $pageTitle ?? 'Team' }}</h4>
+            <h4 class="page-title "><i class="fa fa-users"></i> {{ $pageTitle ?? __('team::app.teamView') }}</h4>
         </div>
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 
@@ -28,14 +28,14 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="panel panel-inverse">
-                            <div class="panel-heading">Team Information</div>
+                            <div class="panel-heading">@lang('team::app.teamInformation')</div>
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body">
                                     <ul class="basic-list">
                                         <li>
                                             <div class="row">
                                                 <div class="col-sm-5">
-                                                    Team Name:
+                                                    @lang('team::app.teamName'):
                                                 </div>
                                                 <div class="col-sm-7 text-right">
                                                     {{ $team->name }}
@@ -45,7 +45,7 @@
                                         <li>
                                             <div class="row">
                                                 <div class="col-sm-5">
-                                                    Description:
+                                                    @lang('app.description'):
                                                 </div>
                                                 <div class="col-sm-7 text-right">
                                                     {{ $team->description }}
@@ -55,7 +55,7 @@
                                         <li>
                                             <div class="row">
                                                 <div class="col-sm-5">
-                                                    Status:
+                                                    @lang('app.status'):
                                                 </div>
                                                 <div class="col-sm-7 text-right" id="status">
                                                     <span
@@ -66,7 +66,7 @@
                                         <li>
                                             <div class="row">
                                                 <div class="col-sm-5">
-                                                    Since:
+                                                    @lang('team::app.since'):
                                                 </div>
                                                 <div class="col-sm-7 text-right">
                                                     {{ $team->created_at->format('d F, Y') }}
@@ -76,7 +76,7 @@
                                         <li>
                                             <div class="row">
                                                 <div class="col-sm-5">
-                                                    Members:
+                                                    @lang('team::app.members'):
                                                 </div>
                                                 <div class="col-sm-7 text-right">
                                                     <span class="badge badge-success">{{ $team->members->count() }}</span>
@@ -86,7 +86,7 @@
                                         <li>
                                             <div class="row" id="previewLeader">
                                                 <div class="col-sm-5">
-                                                    Team Leader:
+                                                    @lang('team::app.teamLeader'):
                                                 </div>
                                                 <div class="col-sm-7 text-right">
                                                     <a href="javascript:;" style="color: #03a9f3;">{{ $team->leader->name ?? 'Add' }}</a>
@@ -98,18 +98,18 @@
                                                     @foreach ($employees as $emp)
                                                         <option value="{{ $emp->id }}" {{ $emp->id == $team->team_leader ? 'selected' : '' }}>{{ ucwords($emp->name) }}
                                                             @if ($emp->id == $user->id)
-                                                                (YOU) @endif
+                                                                (@lang('team::app.you')) @endif
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                                <button class="btn btn-sm btn-success" id="update">Update</button>
-                                                <button class="btn btn-sm btn-inverse" id="cancel">Cancel</button>
+                                                <button class="btn btn-sm btn-success" id="update">@lang('app.update')</button>
+                                                <button class="btn btn-sm btn-inverse" id="cancel">@lang('app.cancel')</button>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="row">
                                                 <div class="col-sm-5">
-                                                    Update Status
+                                                    @lang('team::app.updateStatus')
                                                 </div>
                                                 <div class="col-sm-7 text-right">
                                                     <div class="switchery-demo">
@@ -124,10 +124,10 @@
                                         <li>
                                             <div class="row">
                                                 <div class="col-sm-5">
-                                                    <button class="btn btn-sm btn-info" id="editTeam">Edit</button>
+                                                    <button class="btn btn-sm btn-info" id="editTeam">@lang('app.edit')</button>
                                                 </div>
                                                 <div class="col-sm-7 text-right" id="deleteTeam">
-                                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                                    <button class="btn btn-sm btn-danger">@lang('app.delete')</button>
                                                 </div>
                                             </div>
                                         </li>
@@ -139,7 +139,7 @@
 
                     <div class="col-md-8">
                         <div class="panel panel-inverse">
-                            <div class="panel-heading">Team Members</div>
+                            <div class="panel-heading">@lang('team::app.teamMembers')</div>
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body">
 
@@ -151,7 +151,7 @@
                                                 @foreach ($employees as $emp)
                                                     <option value="{{ $emp->id }}">{{ ucwords($emp->name) }}
                                                         @if ($emp->id == $user->id)
-                                                            (YOU) @endif
+                                                            (@lang('team::app.you')) @endif
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -169,9 +169,9 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th width="50%">Name</th>
-                                                    <th>Department</th>
-                                                    <th>Action</th>
+                                                    <th width="50%">@lang('app.name')</th>
+                                                    <th>@lang('app.department')</th>
+                                                    <th>@lang('app.action')</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="employeeDocsList">

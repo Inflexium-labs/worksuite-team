@@ -1,6 +1,6 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h4 class="modal-title">Edit Team</h4>
+    <h4 class="modal-title">@lang('team::app.editTeam')</h4>
 </div>
 <div class="modal-body">
     <div class="portlet-body">
@@ -8,18 +8,19 @@
         
             <div class="form-body">
                 <div class="form-group">
-                    <label class="required">Name</label>
+                    <label class="required">@lang('app.name')</label>
                     <input type="text" class="form-control" name="name" placeholder="Name" value="{{ $team->name }}"/>
                 </div>
                 
                 <div class="form-group">
-                    <label>Description</label>
+                    <label>@lang('app.description')</label>
                     <textarea class="form-control" name="description" placeholder="Description" rows="5">{{ $team->description }}</textarea>
                 </div>
 
                 <div class="form-actions">
                     <button class="btn btn-success">
-                        <i class="fa fa-check"></i> Update
+                        <i class="fa fa-check"></i>
+                        @lang('app.update')
                     </button>
                 </div>
             </div>
