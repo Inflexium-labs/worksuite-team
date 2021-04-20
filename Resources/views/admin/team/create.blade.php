@@ -2,7 +2,7 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h4 class="modal-title">Create Team</h4>
+    <h4 class="modal-title">@lang('team::app.createTeam')</h4>
 </div>
 <div class="modal-body">
     <div class="portlet-body">
@@ -10,17 +10,17 @@
         
             <div class="form-body">
                 <div class="form-group">
-                    <label class="required">Name</label>
+                    <label class="required">@lang('app.name')</label>
                     <input type="text" class="form-control" name="name" placeholder="Name"/>
                 </div>
                 
                 <div class="form-group">
-                    <label>Description</label>
+                    <label>@lang('app.description')</label>
                     <textarea class="form-control" name="description" placeholder="Description" rows="5"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label style="display: block;">Status</label>
+                    <label style="display: block;">@lang('app.status')</label>
                     <div class="switchery-demo">
                         <input type="checkbox" name="status" value="1" class="js-switch" data-color="#00c292" data-secondary-color="#f96262" />
                     </div>
@@ -28,7 +28,8 @@
 
                 <div class="form-actions">
                     <button class="btn btn-success">
-                        <i class="fa fa-check"></i> Save
+                        <i class="fa fa-check"></i>
+                        @lang('app.save')
                     </button>
                 </div>
             </div>

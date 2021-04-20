@@ -3,12 +3,13 @@
 @section('content')
     <div class="row bg-title">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title "><i class="fa fa-users"></i> {{ $pageTitle ?? 'Team' }}</h4>
+            <h4 class="page-title "><i class="fa fa-users"></i> {{ $pageTitle ?? __('team::app.team') }}</h4>
         </div>
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <a href="{{ route('admin.team.create') }}" class="btn btn-outline btn-success btn-sm pull-right"
                 id="createTeam">
-                Create Team <i class="fa fa-plus" aria-hidden="true"></i>
+                @lang('team::app.createTeam')
+                <i class="fa fa-plus" aria-hidden="true"></i>
             </a>
         </div>
     </div>
@@ -31,7 +32,7 @@
                                     {{ $team->name }}
                                 </div>
                                 <div class="col-xs-4 text-right">
-                                    <span class="widget-title"> Members</span><br>
+                                    <span class="widget-title"> @lang('team::app.members')</span><br>
                                     <span class="counter">{{ $team->members->count() }}</span>
                                 </div>
                             </div>
@@ -56,8 +57,8 @@
                     @lang('incident::app.loading')
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn blue">Save changes</button>
+                    <button type="button" class="btn default" data-dismiss="modal">@lang('app.close')</button>
+                    <button type="button" class="btn blue">@lang('app.save')</button>
                 </div>
             </div>
             <!-- /.modal-content -->
