@@ -5,6 +5,7 @@ namespace Modules\Team\Entities;
 use App\User as BaseUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Froiden\RestAPI\ExtendedRelations\BelongsToMany;
 
 class User extends BaseUser
@@ -22,10 +23,10 @@ class User extends BaseUser
     /**
      * Get the myTeam associated with the User
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function myTeam(): HasOne
+    public function myTeams(): HasMany
     {
-        return $this->hasOne(Group::class, 'team_leader', 'id')->active();
+        return $this->hasMany(Group::class, 'team_leader', 'id')->active();
     }
 }
