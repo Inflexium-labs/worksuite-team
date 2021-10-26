@@ -8,17 +8,17 @@ class GroupObserver
 {
     public function created(Group $group)
     {
-        activity()->performedOn($group)->log('created');
+        activity()->eventName('created')->performedOn($group)->log('created');
     }
 
     public function updated(Group $group)
     {
-         activity()->properties($group)->performedOn($group)->log('updated');
+         activity()->eventName('updated')->properties($group)->performedOn($group)->log('updated');
     }
 
     public function deleted(Group $group)
     {
-         activity()->performedOn($group)->log('deleted');
+         activity()->eventName('deleted')->performedOn($group)->log('deleted');
     }
 
 }
