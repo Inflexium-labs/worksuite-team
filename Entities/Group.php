@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Modules\Team\Observers\GroupObserver;
 
 class Group extends Model
 {
@@ -35,6 +36,9 @@ class Group extends Model
             }
         });
 
+        static::observe(GroupObserver::class);
+
+
         // static::addGlobalScope('active', function (Builder $builder) {
         //     $builder->where('groups.status', 1);
         // });
@@ -52,7 +56,9 @@ class Group extends Model
      */
     public function members(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'group_users', 'group_id', 'user_id');
+        return $this->belongsToMany(User::class, 'group_users', 'group_id', 'user_id')
+        ->using(GroupUser::class)
+        ->withPivot('id');
     }
 
     /**
