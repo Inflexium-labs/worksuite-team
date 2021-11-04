@@ -177,7 +177,7 @@
                                             <tbody id="employeeDocsList">
                                                 @foreach ($team->members as $member)
                                                     <tr>
-                                                        <td>{{ $member->employeeDetail->id ?? 'none' }}</td>
+                                                        <td>{{ $member->employeeDetail->employee_id ?? 'none' }}</td>
                                                         <td>{{ $member->name }}</td>
                                                         <td>{{ $member->employeeDetail->department->team_name ?? '--' }}
                                                         </td>
