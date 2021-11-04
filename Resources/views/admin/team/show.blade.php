@@ -149,7 +149,7 @@
                                             <select class="select2 m-b-10 select2-multiple " multiple="multiple"
                                                 data-placeholder="@lang('modules.messages.chooseMember')" name="members[]">
                                                 @foreach ($employees as $emp)
-                                                    <option value="{{ $emp->id }}">{{ ucwords($emp->name) }}
+                                                    <option value="{{ $emp->id }}">{{ ucwords($emp->name) }} {{ isset($emp->employeeDetail->department->team_name) ? ' - ('.$emp->employeeDetail->department->team_name.')' : '' }}
                                                         @if ($emp->id == $user->id)
                                                             (@lang('team::app.you')) @endif
                                                     </option>
@@ -177,7 +177,7 @@
                                             <tbody id="employeeDocsList">
                                                 @foreach ($team->members as $member)
                                                     <tr>
-                                                        <td>{{ $member->id }}</td>
+                                                        <td>{{ $member->employeeDetail->id ?? 'none' }}</td>
                                                         <td>{{ $member->name }}</td>
                                                         <td>{{ $member->employeeDetail->department->team_name ?? '--' }}
                                                         </td>
