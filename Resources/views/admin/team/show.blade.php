@@ -79,7 +79,8 @@
                                                     @lang('team::app.members'):
                                                 </div>
                                                 <div class="col-sm-7 text-right">
-                                                    <span class="badge badge-success">{{ $team->members->count() }}</span>
+                                                    <span
+                                                        class="badge badge-success">{{ $team->members->count() }}</span>
                                                 </div>
                                             </div>
                                         </li>
@@ -89,21 +90,27 @@
                                                     @lang('team::app.teamLeader'):
                                                 </div>
                                                 <div class="col-sm-7 text-right">
-                                                    <a href="javascript:;" style="color: #03a9f3;">{{ $team->leader->name ?? 'Add' }}</a>
-                                                    {{-- <a class="label label-info"><i class="fa fa-pencil"></i></a> --}}
+                                                    <a href="javascript:;"
+                                                        style="color: #03a9f3; border-bottom: 1px dotted gray">{{ $team->leader->name ?? 'Add' }}</a>
                                                 </div>
                                             </div>
                                             <div class="row" id="editLeader" style="display: none;">
-                                                <select class="form-control select2 m-b-10" data-placeholder="@lang('modules.messages.chooseMember')" name="team_leader">
+                                                <select class="form-control select2 m-b-10"
+                                                    data-placeholder="@lang('modules.messages.chooseMember')"
+                                                    name="team_leader">
                                                     @foreach ($employees as $emp)
-                                                        <option value="{{ $emp->id }}" {{ $emp->id == $team->team_leader ? 'selected' : '' }}>{{ ucwords($emp->name) }}
+                                                        <option value="{{ $emp->id }}"
+                                                            {{ $emp->id == $team->team_leader ? 'selected' : '' }}>
+                                                            {{ ucwords($emp->name) }}
                                                             @if ($emp->id == $user->id)
                                                                 (@lang('team::app.you')) @endif
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                                <button class="btn btn-sm btn-success" id="update">@lang('app.update')</button>
-                                                <button class="btn btn-sm btn-inverse" id="cancel">@lang('app.cancel')</button>
+                                                <button class="btn btn-sm btn-success"
+                                                    id="update">@lang('app.update')</button>
+                                                <button class="btn btn-sm btn-inverse"
+                                                    id="cancel">@lang('app.cancel')</button>
                                             </div>
                                         </li>
                                         <li>
@@ -124,7 +131,8 @@
                                         <li>
                                             <div class="row">
                                                 <div class="col-sm-5">
-                                                    <button class="btn btn-sm btn-info" id="editTeam">@lang('app.edit')</button>
+                                                    <button class="btn btn-sm btn-info"
+                                                        id="editTeam">@lang('app.edit')</button>
                                                 </div>
                                                 <div class="col-sm-7 text-right" id="deleteTeam">
                                                     <button class="btn btn-sm btn-danger">@lang('app.delete')</button>
@@ -149,7 +157,8 @@
                                             <select class="select2 m-b-10 select2-multiple " multiple="multiple"
                                                 data-placeholder="@lang('modules.messages.chooseMember')" name="members[]">
                                                 @foreach ($employees as $emp)
-                                                    <option value="{{ $emp->id }}">{{ ucwords($emp->name) }} {{ isset($emp->employeeDetail->department->team_name) ? ' - ('.$emp->employeeDetail->department->team_name.')' : '' }}
+                                                    <option value="{{ $emp->id }}">{{ ucwords($emp->name) }}
+                                                        {{ $emp->departments->count() ? ' - (' . implode(', ', $emp->departments->pluck('team_name')->toArray()) . ')' : '' }}
                                                         @if ($emp->id == $user->id)
                                                             (@lang('team::app.you')) @endif
                                                     </option>
@@ -179,7 +188,7 @@
                                                     <tr>
                                                         <td>{{ $member->employeeDetail->employee_id ?? 'none' }}</td>
                                                         <td>{{ $member->name }}</td>
-                                                        <td>{{ $member->employeeDetail->department->team_name ?? '--' }}
+                                                        <td>{{ implode(', ', $member->departments->pluck('team_name')->toArray()) ?? '--' }}
                                                         </td>
                                                         <td><a class="btn btn-danger btn-xs unlinkMember"
                                                                 data-id="{{ $member->id }}"
@@ -329,27 +338,30 @@
             });
         });
 
-        $('#previewLeader a').click(function(){
+        $('#previewLeader a').click(function() {
             toggleLeaderTab()
         })
 
-        $('#editLeader #cancel').click(function(){
+        $('#editLeader #cancel').click(function() {
             toggleLeaderTab()
         })
 
         function toggleLeaderTab() {
             let preview = $('#previewLeader');
             let edit = $('#editLeader');
-            
+
             preview.toggle('show');
             edit.toggle('show');
         }
 
-        $('#editLeader #update').click(function(){
+        $('#editLeader #update').click(function() {
             $.easyAjax({
                 url: "{{ route('admin.team.update-leader', $team) }}",
                 type: "POST",
-                data: { 'leader': $(this).prev().val(), '_token': '{{ csrf_token() }}' },
+                data: {
+                    'leader': $(this).prev().val(),
+                    '_token': '{{ csrf_token() }}'
+                },
                 success: function(res) {
                     if (res.status == 'success') {
                         location.reload(true);
@@ -357,6 +369,5 @@
                 }
             })
         })
-
     </script>
 @endpush
