@@ -158,7 +158,11 @@ class TeamController extends MemberBaseController
     {
         user()->cans('edit_team') || abort(403, __('app.noPermission'));
 
-        $team->update(['team_leader' => request()->leader]);
+        if (!is_array(request()->leader))
+            return false;
+
+        // $team->update(['team_leader' => request()->leader]);
+        $team->leaders()->sync(request()->leader);
         return Reply::success(__('team::app.messages.leaderUpdateSuccess'));
     }
 }

@@ -10,6 +10,7 @@ return array(
     'teamName' => 'Team Name',
     'since' => 'Since',
     'teamLeader' => 'Team Leader',
+    'teamLeaders' => 'Team Leaders',
     'teamMembers' => 'Team Members',
     'updateStatus' => 'Update Status',
     'you' => 'YOU',
@@ -21,6 +22,6 @@ return array(
         'statusUpdateSuccess' => 'Team status updated successfully',
         'memberAddSuccess' => 'Member added successfully',
         'memberRemoveSuccess' => 'Member removed successfully',
-        'leaderUpdateSuccess' => 'Team leader updated successfully',
+        'leaderUpdateSuccess' => 'Team leaders updated successfully',
     )
 );

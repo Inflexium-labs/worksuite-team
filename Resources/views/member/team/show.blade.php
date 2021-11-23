@@ -87,20 +87,23 @@
                                         <li>
                                             <div class="row" id="previewLeader">
                                                 <div class="col-sm-5">
-                                                    @lang('team::app.teamLeader'):
+                                                    @lang('team::app.teamLeaders'):
                                                 </div>
                                                 <div class="col-sm-7 text-right">
                                                     <a href="javascript:;"
-                                                        style="color: #03a9f3; border-bottom: 1px dotted gray">{{ $team->leader->name ?? 'Add' }}</a>
+                                                        style="color: #03a9f3; border-bottom: 1px dotted gray">
+                                                        {{ $team->leaders->count() ? implode(', ', $team->leaders->pluck('name')->toArray()) : 'Add' }}</a>
                                                 </div>
                                             </div>
                                             <div class="row" id="editLeader" style="display: none;">
-                                                <select class="form-control select2 m-b-10"
+                                                <select class="select2 select2-multiple m-b-10"
                                                     data-placeholder="@lang('modules.messages.chooseMember')"
-                                                    name="team_leader">
+                                                    name="team_leader"
+                                                    multiple>
+                                                    @php($leaderIds = $team->leaders->pluck('id')->toArray())
                                                     @foreach ($employees as $emp)
                                                         <option value="{{ $emp->id }}"
-                                                            {{ $emp->id == $team->team_leader ? 'selected' : '' }}>
+                                                            {{ in_array($emp->id, $leaderIds) ? 'selected' : '' }}>
                                                             {{ ucwords($emp->name) }}
                                                             @if ($emp->id == $user->id)
                                                                 (@lang('team::app.you')) @endif

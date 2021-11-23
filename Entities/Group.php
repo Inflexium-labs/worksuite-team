@@ -57,8 +57,8 @@ class Group extends Model
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'group_users', 'group_id', 'user_id')
-        ->using(GroupUser::class)
-        ->withPivot('id');
+            ->using(GroupUser::class)
+            ->withPivot('id');
     }
 
     /**
@@ -69,5 +69,15 @@ class Group extends Model
     public function leader(): BelongsTo
     {
         return $this->belongsTo(User::class, 'team_leader', 'id');
+    }
+
+    /**
+     * The leaders that belong to the Group
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function leaders(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'group_leaders');
     }
 }
