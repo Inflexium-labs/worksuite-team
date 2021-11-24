@@ -18,7 +18,7 @@ class TeamController extends MemberBaseController
     public function index()
     {
         user()->cans('view_team') || abort(403, __('app.noPermission'));
-
+        
         $this->pageTitle = __('team::app.team');
         $this->teams = Group::all();
 
